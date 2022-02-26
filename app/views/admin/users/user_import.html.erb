@@ -1,0 +1,27 @@
+<h1>Errors List</h1>
+
+<table style="border: solid 2px lightgrey;">
+  <tr>
+    <th style="font-size:20px;">Row Number</th>              
+    <th style="font-size:20px;">Username </th>                      
+    <th style="font-size:20px;">Phone</th>
+    <th style="color:black;font-size:20px;" >Errors (Please Fix These Errors)</th>
+  </tr>
+ 
+ <% @errors.each do |error| %>
+  
+ 
+    <tr>
+    <td style="font-size:15px;" ><%=error["row"]%></td>       
+    <td style="font-size:15px;" ><%=error["username"]%></td>  
+    <td style="font-size:15px;" ><%=error["phone"] %></td>   
+    <td style="color:red;font-size:18px;" ><%=error["error"] {:style=>"color: red;"} %></td>
+    </tr>
+  <% end %>
+ </table>
+
+<h3 style="color:red;" >Click below link to download records that were unable to import. Please edit and import it again!!</h3>
+<div style="font-size:20px;">
+<%= link_to "Download CSV", admin_users_export_path(:errors => @errors, :format => "csv" ) %>
+</div>
+
