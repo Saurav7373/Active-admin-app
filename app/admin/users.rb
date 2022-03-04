@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register User do
+  sidebar :versionate, partial: 'layouts/version', only: :show
+  # active_admin_paranoia
+  # acts_as_paranoid
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
@@ -26,7 +29,10 @@ ActiveAdmin.register User do
     end
     f.actions
   end
-
+  action_item only: :index do
+    link_to 'History'
+  end
+  # controller for users
   controller do
     def create
       # render plain: params
@@ -68,6 +74,7 @@ ActiveAdmin.register User do
 
       else
         User.create(permitted_params[:user])
+        redirect_to admin_users_path
       end
       # flash[:notice] = "Imported Records: #{@a[successfull]}"
       # flash[:warning] = "Unimported Records: #{@a[unsuccessfull]}"
@@ -81,5 +88,19 @@ ActiveAdmin.register User do
       end
       # redirect_to admin_users_paths
     end
+
+    def show
+      @user = User.includes(versions: :item).find(params[:id])
+      @versions = @user.versions
+      @user = @user.versions[params[:version].to_i].reify if params[:version]
+      @user.save
+    end
+  end
+
+  member_action :history do
+    @user = User.find(params[:id])
+    @versions = PaperTrail::Version.where(item_type: 'User', item_id: @user.id)
+
+    render 'layouts/historyuser'
   end
 end
