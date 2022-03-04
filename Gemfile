@@ -112,3 +112,5 @@ gem 'smarter_csv'
 
 # Used to send emails
 gem 'sendgrid-ruby', '~> 6.6', '>= 6.6.1'
+
+gem 'paper_trail'

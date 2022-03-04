@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  has_paper_trail
   def self.to_csv(errors)
     CSV.generate do |csv|
       csv << %w[row username phone description error]

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Post < ApplicationRecord
+  has_paper_trail
+  # has_paper_trail :if     => Proc.new { |t| t.language_code == 'US' },
+  #                 :unless => Proc.new { |t| t.type == 'DRAFT'       }
   belongs_to :user
   # attr_accessible: :name, :gender
   #     before_validation :set_user

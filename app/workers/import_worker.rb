@@ -11,7 +11,7 @@ class ImportWorker
     unsuccessfull = 0
     count = 0
     data.each do |hash|
-      count +=1
+      count += 1
       # to check username presence in csv
       if hash.key?(:username)
         # for uniqueness
@@ -22,7 +22,7 @@ class ImportWorker
           unsuccessfull += 1
         else
           @user = User.create(hash)
-         
+
           successfull += 1 if @user.save
         end
       # checking uniqueness of username
@@ -38,8 +38,7 @@ class ImportWorker
       @user = User.create(hash)
       successfull += 1 if @user.save
     end
-    unsuccessfull = count-successfull
-    UserNotifierMailer.send_import_email(successfull, unsuccessfull).deliver_now
-
+    unsuccessfull = count - successfull
+    # UserNotifierMailer.send_import_email(successfull, unsuccessfull).deliver_now
   end
 end

@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Post do
+  sidebar :versionate, partial: 'layouts/version', only: :show
+  # active_admin_paranoia
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #
   # Uncomment all parameters which should be permitted for assignment
   # #
-  permit_params :title, :body, :user_id
+  permit_params :title, :body, :user_id, :item
   #
   #   column :title
   #   column :body
@@ -22,6 +24,39 @@ ActiveAdmin.register Post do
     end
     f.actions
   end
+  action_item only: :index do
+    link_to 'History'
+  end
+  # index do
+  #   selectable_column
+  #   id_column
+  #   column :user
+  #   column :title
+  #   column :body
+  #   column ("Admin Resource") { |v| v.item_type.underscore.humanize }
+
+  #   column :created_at
+  #   column :updated_at
+  #   actions
+  # end
+
+  # show do
+  #   attributes_table do
+  #     row :user
+  #     row :title
+  #     row :body
+  #     row :item_type
+  #     # do |p|
+  #     #   if p.item
+  #     #     link_to p.item, [:admin, p.item]
+  #     #   end
+  #     # end
+  #     row :created_at
+  #     row :updated_at
+  #   end
+  #   active_admin_comments
+  # end
+
   controller do
     # def new
     #   @users   = User.where(username: 'gopal').pluck(:username, :id)
@@ -46,5 +81,19 @@ ActiveAdmin.register Post do
         render :ok
       end
     end
+
+    def show
+      @post = Post.includes(versions: :item).find(params[:id])
+      @versions = @post.versions
+      @post = @post.versions[params[:version].to_i].reify if params[:version]
+      @post.save
+    end
+  end
+
+  member_action :history do
+    @post = Post.find(params[:id])
+    @versions = PaperTrail::Version.where(item_type: 'Post', item_id: @post.id)
+
+    render 'layouts/historypost'
   end
 end
