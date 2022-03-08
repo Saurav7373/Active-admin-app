@@ -1,0 +1,32 @@
+# frozen_string_literal: true
+
+panel 'Deleted Data' do
+  table_for post = Post.only_deleted do
+    @index = ((params[:page] || 1).to_i - 1)
+    column :number do
+      @index += 1
+    end
+    column('Post Id', &:id)
+    column('User', &:user)
+    column :title do |t|
+      t.title[0...25]
+    end
+    column :body do |post|
+      post.body[0...25]
+    end
+
+    column('Deleted at') { |v| v.deleted_at.to_s :long }
+    column('Action') do |_n|
+      div do
+        button style: 'background-blend-mode: green;background: yellowgreen;text-shadow: none' do
+          strong(link_to('Restore', admin_posts_restore_path, method: :get,
+                                                              style: 'color: black; text-decoration: none'))
+        end
+        button style: 'background-blend-mode: tomato;background: tomato;text-shadow: none; margin: 5px 5px' do
+          strong(link_to('Hard Delete', admin_posts_destroy_data_path, method: :delete,
+                                                                       style: 'color: black; text-decoration: none'))
+        end
+      end
+    end
+  end
+end

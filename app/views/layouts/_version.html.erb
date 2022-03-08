@@ -8,7 +8,9 @@
   <br>
   <% if @versions.length.to_i > 1 %>
     <% if params[:version].to_i > 1 || !params[:version] %>
-      <%= link_to "Previous version", {:version => (params[:version] || @versions.length).to_i - 1}%>
+    <button style='background: #0069d9;'>
+      <%= link_to "Previous version", {:version => (params[:version] || @versions.length).to_i - 1}, style: "color: #FFFFFF; text-decoration: none;"%>
+    </button>
       <br>
     <% end %>
     <% if params[:version] %>
@@ -21,9 +23,18 @@
       <%= AdminUser.find(@versions[(params[:version].to_i - 1)].whodunnit).email %>
       <br>
 
-      <%= link_to "Go to current version"%>
-    <% end %>
-  <% end %>
-<% else %>
-  <p>This item does not have any registered version.</p>
+      <button style='background: #356b76;'>
+
+      <%= link_to "Go to current version",{}, style: "color: white; text-decoration: none;" %>
+      </button>
+
+      <div style='float: right;'>
+     <button style='background: green;'>
+      <%= link_to "Save",admin_posts_paper_update_path({:version => (params[:version] || @versions.length).to_i }),method: :post, style: "color: white; text-decoration: none;"%>
+      </button>
+      </div>
+      <% end %>
+      <% end %>
+      <% else %>
+      <p>This item does not have any registered version.</p>
 <% end %>
