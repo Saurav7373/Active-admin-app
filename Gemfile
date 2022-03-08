@@ -114,3 +114,6 @@ gem 'smarter_csv'
 gem 'sendgrid-ruby', '~> 6.6', '>= 6.6.1'
 
 gem 'paper_trail'
+
+
+gem 'paranoia', '~> 2.1', '>= 2.1.5'

@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
+ActiveRecord::Schema.define(version: 2022_03_08_143044) do
+
 ActiveRecord::Schema.define(version: 2022_03_03_064724) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,10 +83,19 @@ ActiveRecord::Schema.define(version: 2022_03_03_064724) do
 
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id"
+
+    t.string "title", limit: 50, null: false
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at", precision: 6
+    t.index ["deleted_at"], name: "index_posts_on_deleted_at"
+
     t.string "title"
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -92,6 +105,10 @@ ActiveRecord::Schema.define(version: 2022_03_03_064724) do
     t.string "file"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+
+    t.datetime "deleted_at", precision: 6
+    t.index ["deleted_at"], name: "index_users_on_deleted_at"
+
   end
 
   create_table "versions", force: :cascade do |t|
