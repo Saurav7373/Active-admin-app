@@ -10,13 +10,18 @@ Rails.application.routes.draw do
   delete '/admin/posts/destroy_data', to: 'admin/posts#destroy_data', as: :admin_posts_destroy_data
   # for undoing post
   get '/admin/posts/restore', to: 'admin/posts#restore', as: :admin_posts_restore
-  # for saving versiions in paper trail
+  # for saving versiions in paper trail post
   post '/admin/posts/paper_update', to: 'admin/posts#paper_update', as: :admin_posts_paper_update
+# for saving versiions in paper trail user
+  post '/admin/users/paper_update', to: 'admin/users#paper_update', as: :admin_users_paper_update
 
-
-# for users
+  # for users
   # for showing deleted data
   get '/admin/users/deleted_record', to: 'admin/users#deleted_record', as: :admin_users_deleted_record
+  # for deleteing permanently the post data
+  delete '/admin/users/destroy_data', to: 'admin/users#destroy_data', as: :admin_users_destroy_data
+  # for undoing post
+  get '/admin/users/restore', to: 'admin/users#restore', as: :admin_users_restore
   ActiveAdmin.routes(self)
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
