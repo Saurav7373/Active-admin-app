@@ -1,16 +1,12 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Post do
-
   # scope "All Record", :with_deleted, default: true
   scope 'Non Deleted Record', :without_deleted, default: true
   # scope "Deleted Record", :only_deleted,->{ where only_deleted: true }
   # scope :without_deleted
 
   # for rendering sidebar in views for checking versions
-  sidebar :versionate, partial: 'layouts/version', only: :show
-
-
   sidebar :versionate, partial: 'layouts/version', only: :show
   # active_admin_paranoia
 
@@ -35,7 +31,6 @@ ActiveAdmin.register Post do
     end
     f.actions
   end
-
 
   filter :user
   filter :title
@@ -95,7 +90,6 @@ ActiveAdmin.register Post do
   #   end
   #   active_admin_comments
   # end
-
 
   controller do
     # for rescuing the unique
@@ -166,7 +160,6 @@ ActiveAdmin.register Post do
       redirect_to admin_posts_path
 
       @post.save
-
     end
   end
 

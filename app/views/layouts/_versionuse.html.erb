@@ -30,7 +30,7 @@
       </button>
       <div style='float: right;'>
      <button style='background: green;'>
-      <%= link_to "Save",admin_posts_paper_update_path({:version => (params[:version] || @versions.length).to_i }),method: :post, style: "color: white; text-decoration: none;"%>
+      <%= link_to "Save",admin_users_paper_update_path({:version => (params[:version] || @versions.length).to_i }),method: :post, style: "color: white; text-decoration: none;"%>
       </button>
       </div>
       <% end %>
