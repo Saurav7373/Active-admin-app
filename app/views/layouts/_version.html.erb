@@ -8,9 +8,12 @@
   <br>
   <% if @versions.length.to_i > 1 %>
     <% if params[:version].to_i > 1 || !params[:version] %>
+
     <button style='background: #0069d9;'>
       <%= link_to "Previous version", {:version => (params[:version] || @versions.length).to_i - 1}, style: "color: #FFFFFF; text-decoration: none;"%>
-    </button>
+
+      <%= link_to "Previous version", {:version => (params[:version] || @versions.length).to_i - 1}%>
+
       <br>
     <% end %>
     <% if params[:version] %>
@@ -22,6 +25,7 @@
       <b>Admin</b>:
       <%= AdminUser.find(@versions[(params[:version].to_i - 1)].whodunnit).email %>
       <br>
+
 
       <button style='background: #356b76;'>
 
@@ -37,4 +41,11 @@
       <% end %>
       <% else %>
       <p>This item does not have any registered version.</p>
+
+      <%= link_to "Go to current version"%>
+    <% end %>
+  <% end %>
+<% else %>
+  <p>This item does not have any registered version.</p>
+
 <% end %>

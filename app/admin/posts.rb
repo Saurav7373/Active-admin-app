@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 ActiveAdmin.register Post do
+
   # scope "All Record", :with_deleted, default: true
   scope 'Non Deleted Record', :without_deleted, default: true
   # scope "Deleted Record", :only_deleted,->{ where only_deleted: true }
@@ -8,6 +9,10 @@ ActiveAdmin.register Post do
 
   # for rendering sidebar in views for checking versions
   sidebar :versionate, partial: 'layouts/version', only: :show
+
+
+  sidebar :versionate, partial: 'layouts/version', only: :show
+  # active_admin_paranoia
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -30,6 +35,7 @@ ActiveAdmin.register Post do
     end
     f.actions
   end
+
 
   filter :user
   filter :title
@@ -56,6 +62,40 @@ ActiveAdmin.register Post do
                      style: 'color: white; text-decoration: none'))
     end
   end
+
+  action_item only: :index do
+    link_to 'History'
+  end
+  # index do
+  #   selectable_column
+  #   id_column
+  #   column :user
+  #   column :title
+  #   column :body
+  #   column ("Admin Resource") { |v| v.item_type.underscore.humanize }
+
+  #   column :created_at
+  #   column :updated_at
+  #   actions
+  # end
+
+  # show do
+  #   attributes_table do
+  #     row :user
+  #     row :title
+  #     row :body
+  #     row :item_type
+  #     # do |p|
+  #     #   if p.item
+  #     #     link_to p.item, [:admin, p.item]
+  #     #   end
+  #     # end
+  #     row :created_at
+  #     row :updated_at
+  #   end
+  #   active_admin_comments
+  # end
+
 
   controller do
     # for rescuing the unique
@@ -93,6 +133,7 @@ ActiveAdmin.register Post do
       @post = Post.includes(versions: :item).find(params[:id])
       @versions = @post.versions
       @post = @post.versions[params[:version].to_i].reify if params[:version]
+
       # @post.save
     end
 
@@ -123,6 +164,9 @@ ActiveAdmin.register Post do
       @post.restore
       flash[:notice] = "#{@post.title} is Restored"
       redirect_to admin_posts_path
+
+      @post.save
+
     end
   end
 
