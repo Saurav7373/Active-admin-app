@@ -13,8 +13,7 @@ Rails.application.routes.draw do
   # for saving versiions in paper trail
   post '/admin/posts/paper_update', to: 'admin/posts#paper_update', as: :admin_posts_paper_update
 
-
-# for users
+  # for users
   # for showing deleted data
   get '/admin/users/deleted_record', to: 'admin/users#deleted_record', as: :admin_users_deleted_record
   ActiveAdmin.routes(self)

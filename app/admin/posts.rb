@@ -124,6 +124,20 @@ ActiveAdmin.register Post do
       flash[:notice] = "#{@post.title} is Restored"
       redirect_to admin_posts_path
     end
+    # def destroy
+    # #  @data = PaperTrail::Version.where(item_type: 'Post', item_id: params[:id])
+    #   # render plain: @data
+    #   @post = Post.find_by(id: params[:id])      
+
+    #     @ob = @post
+    #   if @post.destroy
+    #     @data = PaperTrail::Version.create(item_type: 'Post', item_id: params[:id],event: 'destroy',whodunnit: '1',object: @ob)
+    #     @data.save
+    #     redirect_to  admin_posts_path
+    #   else
+    #     redirect_to blog_path 
+    #   end
+    # end
   end
 
   member_action :history do

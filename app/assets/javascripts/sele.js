@@ -5,6 +5,6 @@ $(document).ready(function() {
         tags: true,
         allowClear: true,
         placeholder: 'Select an option',
-
+        
         });
 });

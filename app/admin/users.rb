@@ -30,13 +30,12 @@ ActiveAdmin.register User do
     f.actions
   end
   action_item only: :index do
-    link_to 'Deleted',admin_users_deleted_record_path
+    link_to 'Deleted', admin_users_deleted_record_path
   end
   # controller for users
   controller do
-
     def deleted_record
-      render 'deleted_data', layout:'active_admin'
+      render 'deleted_data', layout: 'active_admin'
     end
     # def create
     #   # render plain: params
@@ -100,7 +99,6 @@ ActiveAdmin.register User do
     #   @user.save
     # end
   end
-
 
   member_action :history do
     @user = User.find(params[:id])

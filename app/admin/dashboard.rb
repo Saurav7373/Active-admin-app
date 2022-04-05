@@ -12,6 +12,7 @@ ActiveAdmin.register_page 'Dashboard' do
 
     panel 'Recently updated content' do
       table_for PaperTrail::Version.order(id: :desc).limit(nil) do # Use PaperTrail::Version if this throws an error
+       
         @index = ((params[:page] || 1).to_i - 1) # 30 needs to set to that what your page size @index = 30*(((params[:page] || 1).to_i) - 1)
         column :number do
           @index += 1
@@ -24,7 +25,19 @@ ActiveAdmin.register_page 'Dashboard' do
         # column('Changed by') do |v|
         #   link_to AdminUser.find_by_id(v.whodunnit), [:admin, AdminUser.find_by_id(v.whodunnit)]
         # end
-        column('Modified at') { |v| v.created_at.to_s :long }
+        column('Modified at') { |v| v.created_at.to_s :long }  
+        
+    
+        column('Restore') do |_n|
+          post = Post.only_deleted
+            if post.present?
+              strong(link_to('Restore', admin_posts_restore_path, method: :get))
+            end
+            post = User.only_deleted
+            if post.present?
+              strong(link_to('Restore', admin_posts_restore_path, method: :get))
+            end
+        end
       end
     end
   end

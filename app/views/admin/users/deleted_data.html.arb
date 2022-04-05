@@ -9,7 +9,6 @@ panel 'Deleted Data' do
     column('User Id', &:id)
     column('Name', &:username)
     column('Phone', &:phone)
-    
 
     column('Deleted at') { |v| v.deleted_at.to_s :long }
     column('Action') do |_n|
